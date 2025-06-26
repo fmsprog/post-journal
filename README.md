@@ -42,15 +42,18 @@ You can open [Kafka UI](http://localhost:8080) in your browser to inspect topics
 
 You can run multiple replicas (A, B, C) to simulate a distributed environment. Each replica can be started from its corresponding Kotlin file:
 
+In separate terminals, run:
 ```sh
-# In separate terminals, run:
-
 # Replica A
 ./gradlew runKotlinMain -PmainClass="io.github.firsmic.postjournal.sample.application.SampleAppReplicaAKt"
+```
 
+```sh
 # Replica B
 ./gradlew runKotlinMain -PmainClass="io.github.firsmic.postjournal.sample.application.SampleAppReplicaBKt"
+```
 
+```sh
 # Replica C
 ./gradlew runKotlinMain -PmainClass="io.github.firsmic.postjournal.sample.application.SampleAppReplicaCKt"
 ```
@@ -64,7 +67,9 @@ You can start one or more consumers to observe the processed messages:
 ```sh
 # Consumer 1
 ./gradlew runKotlinMain -PmainClass="io.github.firsmic.postjournal.sample.application.SampleAppConsumer1Kt"
+```
 
+```sh
 # Consumer 2
 ./gradlew runKotlinMain -PmainClass="io.github.firsmic.postjournal.sample.application.SampleAppConsumer2Kt"
 ```
