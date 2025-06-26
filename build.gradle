@@ -1,0 +1,51 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '2.1.20'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '2.1.20'
+
+    id "org.jetbrains.kotlin.plugin.spring" version "1.9.0"
+    id "org.jetbrains.kotlin.plugin.allopen" version "1.9.0"
+}
+
+group = 'io.github.firsmic'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
+    implementation('ch.qos.logback:logback-classic:1.5.13')
+    implementation("com.google.guava:guava:33.4.7-jre")
+    implementation("org.apache.kafka:kafka-clients:3.9.0")
+    implementation("com.lmax:disruptor:4.0.0")
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3"
+
+    //testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.10.0'
+
+    testImplementation("org.springframework.boot:spring-boot-starter-web:3.2.3")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.2.3")
+}
+
+test {
+    useJUnitPlatform()
+}
+kotlin {
+    jvmToolchain(21)
+}
+
+tasks.register('runKotlinMain', JavaExec) {
+    group = 'application'
+    description = 'Run any Kotlin main function from test sources'
+
+    classpath = sourceSets.test.runtimeClasspath
+
+    // Получаем имя класса из аргумента командной строки (--args)
+    if (project.hasProperty('mainClass')) {
+        mainClass = project.property('mainClass')
+    } else {
+        throw new GradleException('Please specify mainClass with -PmainClass=<full.class.name>')
+    }
+}
